@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+:root{
+    --FONT_FAMILY:"Poppins", sans-serif;
+    --FONT_SIZE:clamp(14px, 2vw + 1rem, 18px);
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: min(600px,100vw);
+    height:max(700px,100vh);
+}
+.header{
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:var(--FONT_SIZE) ;
+    font-family: var(--FONT_FAMILY);
+}
+.money-details{
+     display: flex;
+     flex-direction: column;
+     height: max(130px,15vh);
+     margin: auto 20px;
+}
+.money-details .money-balance{
+     display: flex;
+     flex-direction: row;
+     height: 50%;
+     background-color: aquamarine;
+     justify-content: space-between;
+     align-items: center;
+     padding-left: 20px;
+     padding-right: 20px;
+     border-radius: 10px;
+     font-size:var(--FONT_SIZE) ;
+     font-family:var(--FONT_FAMILY);
+}
+.money-income-expenses{
+    display: flex;
+    flex-direction: row;
+    width: calc(100%-40px);    
+    height: 50%;
+    margin-top: 10px;
+}
+.money-income,.money-expenses{
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+.money-income{
+     background-color: 	#ADD8E6;
+     margin-right: 5px;
+     font-size:var(--FONT_SIZE) ;
+     font-family: var(--FONT_FAMILY);
+}
+.money-expenses{
+    background-color: 	 #f48b71;
+    margin-left: 5px;
+    font-size:var(--FONT_SIZE) ;
+    font-family: var(--FONT_FAMILY);
+}
+.transactions{
+  display: flex;
+  flex-direction: column;   
+  width: calc(100%-40px);   
+  margin: 20px 20px;
+  height: 25vh;
+  background-color: aliceblue;
+  padding-left:10px;
+  padding-right:10px;
+  border-radius:10px ;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.transactions ul{
+    list-style-type: none;
+    padding: 0;
+}
+.transactions li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+    font-family: monospace,serif;
+    font-size: 20px;
+}
+.new-transction{
+    width:calc(100vw-40px);
+    margin: 20px;
+    height:250px ;
+    font-size:var(--FONT_SIZE) ;
+    font-family: var(--FONT_FAMILY);
+}
+.new-transction h1{
+    font-size: 25px;
+    margin: 10px auto;
+    text-align: center;  
+    background-color: #ACC8E5;
+    color: #020422;
+    border-radius: 10px;
+}
+.new-transction form{
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    background-color: #75EC30;
+    justify-content: space-between;
+    color:#021814 ;
+    border-radius: 10px;
+}
+.new-transction input{
+  border-radius: 10px;
+  height:30px;
+  margin: auto 10px;
+  padding-left:10px;
+  border: none;
+}
+.new-transction button{
+    border-radius: 10px;
+    height:30px;
+    background-color: #F8EB11;
+    color: #671B56;
+    border: none;
+}
+.option-btn ul{
+    height: 35px;
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px ;
+    border-radius: 10px;
+}
+.option-btn li{
+    width: 50%;
+    text-align: center;
+    color:#E6DEDA;
+    border:2px solid #641212 ;
+}
+.hover-income-btn{
+    background-color:#641212 ;
+}
+.hover-expense-btn{
+    background-color:#641212 ;
+}
+.option-btn ul li:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.option-btn ul li:last-child {
+    border-radius: 0 10px 10px 0;
+}
+.description{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100%-40px);   
+    height: 25vh;
+
+}
