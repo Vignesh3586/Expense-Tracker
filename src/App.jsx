@@ -1,19 +1,18 @@
+import {  Routes ,Route} from 'react-router-dom'
 import './App.css'
-import Header from './components/Header'
-import MoneyDeatils from './components/MoneyDeatils'
-import NewTransaction from './components/NewTransaction'
-import Transactions from './components/Transactions'
+import LoginPage from './LoginPage'
+import CreateUser from './CreateUser'
+
 
 function App() {
 
   return (
     <>
-    <div className="container">
-    <Header/>
-    <MoneyDeatils/>
-    <Transactions/>
-    <NewTransaction/> 
-    </div>  
+    <Routes>
+      <Route path="/" element={<LoginPage/>}/>
+      <Route path="/create-user" element={<CreateUser/>}/>
+      <Route path="/forget-password" element={<ForgetPassword/>}/>
+    </Routes>
     </>
   )
 }
