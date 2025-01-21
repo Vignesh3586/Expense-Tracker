@@ -1,5 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate ,Link} from 'react-router-dom'
+import { useState } from 'react'
 
 const CreateUser = () => {
     const navigate=useNavigate()
@@ -11,8 +12,14 @@ const CreateUser = () => {
    const [passwordMessage,setPasswordMessage]=useState("")
    const [confirmPasswordMessage,setConfirmPasswordMessage]=('')
     
+
+   const styledLinkElement={
+    textDecoration:"none",
+    color:"#A6EBF1",
+}
+
     const postEmail=async()=>{
-        const url=""
+        const url="https://backend-expense-tracker-ur4n.onrender.com/create-user"
         const bodyData={
             email:email,
             password:password,
@@ -21,7 +28,7 @@ const CreateUser = () => {
             method:"post",
             body:JSON.stringify(bodyData),
             headers:{
-               "Content-Type":"Application/json"
+               "Content-Type":"application/json"
             }
         }
         try{
@@ -76,8 +83,9 @@ const CreateUser = () => {
     }
   return (
     <>
-    <section class="create-user-page">
-     <div>Create Account</div>
+    <div className="body-create">
+    <section className="create-user-page">
+     <div id="header-create">Create Account</div>
      <form id="email validation">
         <label htmlFor="input-email">Email</label>
         <input type="email" 
@@ -106,14 +114,15 @@ const CreateUser = () => {
         value={confirmPassword}
         onChange={(e)=>setConfirmPassword(e.target.value)}/>
         <div className="confirm-password-message">{confirmPasswordMessage}</div>
-        <button type="button" class="login-btn" onClick={validateUser}>
+        <button type="button" className="login-btn" onClick={validateUser}>
           Create Account
         </button>
         </form>
-        <div>
-            I have account?<Link to="/">login</Link>
+        <div id="optional-create">
+            I have account?<Link style={styledLinkElement} to="/">login</Link>
         </div>
     </section>
+    </div>
     </>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
+import { useState } from 'react'
 
 const LoginPage = () => {
     const navigate=useNavigate()
@@ -8,74 +9,55 @@ const LoginPage = () => {
     const [password,setPassword]=useState("")
     const [emailMessage,setEmailMessage]=useState("")
     const [passwordMessage,setPasswordMessage]=useState("")
-    
-    const existsEmail=async()=>{
-        const url=""
-        const bodyData={
-            email:email,
-        }
-        const options={
-            method:"get",
-            query:JSON.stringify(bodyData),
-            headers:{
-               "Content-Type":"Application/json"
-            }
-        }
-        try{
-            await fetch(url,options) 
-            return true
-        }catch(error){
-            console.error(`Error:${error.message}`)
-        }
-    
-    }
 
-    const existsPassword=async()=>{
-        const url=""
-        const bodyData={
-            email:email,
-            password:password,
-        }
+    const styledLinkElement={
+        textDecoration:"none",
+        color:"#A6EBF1",
+    }
+    
+ 
+
+    const existsEmailAndPassword=async()=>{
+        const url="https://backend-expense-tracker-ur4n.onrender.com"
         const options={
             method:"get",
-            query:JSON.stringify(bodyData),
             headers:{
-               "Content-Type":"Application/json"
+               "Content-Type":"application/json"
             }
         }
+        const finalURL=`${url}?email=${email}&password=${password}`
         try{
-            const response=await fetch(url,options) 
+            const response=await fetch(finalURL,options) 
             const result=await response.json()
-            return true
+            return result
         }catch(error){
             return error.message
         }
     
     }
 
-    const validateUser=()=>{
-        
-        const isEmail=()=>{
-            if(!email.innerText){
-               setEmailMessage("Email cannot be empty")
-                return false
-            }
-            const checkEmail=existsEmail()
-            if(checkEmail){
-                return true
-            }else{
-                  setEmailMessage(checkEmail)
-                  return false
-            }
+    const isEmail=()=>{
+        if(!email.innerText){
+           setEmailMessage("Email cannot be empty")
+            return false
         }
-
-      const isPassword=()=>{
-      if(password){
-        const checkPassword=existsPassword()
-        if(checkPassword){
+        const checkEmail=existsEmail()
+        if(checkEmail){
             return true
         }else{
-            alert(checkPassword)
+              setEmailMessage(checkEmail)
+              return false
+        }
+    }
+
+    const validateUser=()=>{  
+      const isPassword=()=>{
+      if(password){
+        const checkPassword=existsEmailAndPassword()
+        if(checkPassword.ok){
+            return true
+        }else{
+            alert(checkPassword.message)
         } 
       }else{
         setPasswordMessage("Password cannot be empty")
@@ -90,10 +72,17 @@ const LoginPage = () => {
 
     }
 
+    const navigateToForgetPassword=()=>{
+        if(isEmail()){
+            navigate("/forget-password",{state:{email}})
+        }  
+    }
+
   return (
     <>
+    <div className='body-login'>
      <section className="login-page">
-        <header>Login</header>
+        <header id="header-login">Login</header>
         <form id="email validation">
         <label htmlFor="input-email">Email</label>
         <input type="email" 
@@ -112,15 +101,21 @@ const LoginPage = () => {
         placeholder='Enter password'
         value={password}
         onChange={(e)=>setPassword(e.target.value)}/>
+                <a style={{
+                     textDecoration:"none",
+                     fontSize:"12px",
+                     color:"#A6EBF1",
+                }} to="/forget-password" onClick={navigateToForgetPassword}>forget password</a>
         <div className="password-message">{passwordMessage}</div>
-        <button type="button" class="login-btn" onClick={validateUser}>Login
+        <button type="button" className="login-btn" onClick={validateUser}>Login
         </button>
         </form>
-        <a onClick={forgetPassword}>forget password</a>
-        <div>
-            I have no account?<Link to="/create-user">create account</Link>
+
+        <div id="optional-login">
+            I have no account?<Link style={styledLinkElement} to="/create-user">create account</Link>
         </div>
       </section>
+      </div>
     </>
   )
 }

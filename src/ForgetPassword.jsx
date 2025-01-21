@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const ForgetPassword = () => {
    const location=useLocation()
@@ -11,7 +12,7 @@ const ForgetPassword = () => {
    const [confirmPasswordMessage,setConfirmPasswordMessage]=('')
 
    const updatePassword=async()=>{
-     const url=""
+     const url="https://backend-expense-tracker-ur4n.onrender.com"
      const details={
         email:email,
         password:password,
@@ -20,12 +21,15 @@ const ForgetPassword = () => {
         method:"put",
         body:JSON.stringify(details),
         headers:{
-            "Content-Type":"Application/json"
+            "Content-Type":"application/json"
         }
      }
      try{
         const response=await fetch(url,options)
-        return true
+        if(response.ok){
+          return true
+        }
+     
      }catch(error){
         console.error(error.message)
         return error.message
@@ -72,22 +76,28 @@ if(isPassword()){
 }
 
 }
+   
+const styledLinkElement={
+  textDecoration:"none",
+  color:"#A6EBF1",
+}
 
 
 
 
   return (
         <>
+        <div className="body-forget">
         <section className="forget-password-page">
-        <header>Login</header>
+        <header id="header-forget">Forget Password</header>
         <form id="email validation">
         <label htmlFor="input-email">Email</label>
         <input type="email" 
         name="email" 
         id="input-email"
-         value={emailValue}
+         value={email}
          readOnly/>
-        <label htmlFor="input-password">Password</label>
+        <label htmlFor="input-password">New Password</label>
         <input type="password" 
         name="password" 
         id="input-password"
@@ -105,13 +115,14 @@ if(isPassword()){
         value={confirmPassword}
         onChange={(e)=>setConfirmPassword(e.target.value)}/>
         <div className="confirm-password-message">{confirmPasswordMessage}</div>
-        <button type="button" class="login-btn" onClick={validateUser}>Login
+        <button type="button" className="login-btn" onClick={validateUser}>Login
         </button>
         </form>
-        <div>
-            I have no account?<Link to="/create-user">create account</Link>
+        <div id='optional-forget'>
+            I have no account?<Link style={styledLinkElement} to="/create-user">create account</Link>
         </div>
       </section>
+      </div>
         </>
   )
 }

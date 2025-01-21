@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {useSelector} from 'react-redux'
 import { selectAllTransactions } from '../slices/transctionSlice'
 
 const Transactions = () => {
     const transactions=useSelector(selectAllTransactions)
+  
     const sign=(type)=>{
       if(type=='Income'){
         return '+'
       }else{
         return '-'
+      }
+    }
+
+    const getStyleOfSpan=(type)=>{
+      if(type=="Income"){
+        return {color:"#21596d"}
+      }else{
+        return {color:"rgba(127,86,95,255)"}
       }
     }
     return (
@@ -18,8 +27,8 @@ const Transactions = () => {
           <ul>
           {transactions.map((transaction)=>(
              <li key={transaction.Id}>
-              <label htmlFor="transaction">{transaction.Name}</label>
-              <span id='transction'>{`${sign(transaction.Type)}${transaction.Amount}`}</span>
+              <label htmlFor="transaction">{transaction.transactionName}</label>
+              <span id='transction' style={()=>getStyleOfSpan(transaction.transactionType)}>{`${sign(transaction.transactionType)}${transaction.transactionAmount}`}</span>
              </li>
           ))
           }

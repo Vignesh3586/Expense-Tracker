@@ -10,19 +10,95 @@
 body{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;   
+    position: relative;
 }
-.container{
-    width: min(600px,100vw);
-    height:max(700px,100vh);
+.container{  
+     position: relative;
+     width: min(1000px,100vw);
+     height:100vh;
+
+    
+}
+.transaction-container{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(40,29,96,255);
+    overflow-y: scroll;
+    color:#eae7f6;
 }
 .header{
     height: 10vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width:100%;
+    padding: 0 5vw;
     font-size:var(--FONT_SIZE) ;
     font-family: var(--FONT_FAMILY);
+}
+.header .history-btn,.history-header button{
+    background: transparent;
+    border: none;
+    color:#eae7f6;
+    font-size:var(--FONT_SIZE) ;
+}
+.history-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height:100vh;
+    width:50%;
+    margin-left: 10px;
+    background-color: rgba(40,29,96,255);
+    color:#eae7f6;
+    overflow-y: scroll;
+}
+.history-header{
+    display: flex;
+    height: 10vh;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+div[class$="history"]>label{
+    height: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div[class$="history"]>ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: square;
+}
+
+li[id$="income"]::marker{
+   color:#14A44D;
+   font-size: 1.2rem;
+}
+
+li[id$="expense"]::marker{
+    color:#DC4C64;
+    font-size: 1.2rem;
+ }
+
+ .with-history{
+    display: block ;
+ }
+
+ .without-history{
+    display: none;
+ }
+
+.header h1{
+    font-size:var(--FONT_SIZE) ;
+    padding-right: 35%;
 }
 .money-details{
      display: flex;
@@ -34,7 +110,7 @@ body{
      display: flex;
      flex-direction: row;
      height: 50%;
-     background-color: aquamarine;
+     background-color: rgba(50,156,246,0.5);
      justify-content: space-between;
      align-items: center;
      padding-left: 20px;
@@ -59,13 +135,13 @@ body{
     width: 50%;
 }
 .money-income{
-     background-color: 	#ADD8E6;
+     background-color: 	rgba(254,152,56,0.5);
      margin-right: 5px;
      font-size:var(--FONT_SIZE) ;
      font-family: var(--FONT_FAMILY);
 }
 .money-expenses{
-    background-color: 	 #f48b71;
+    background-color: 	 rgba(237,183,205,0.5);
     margin-left: 5px;
     font-size:var(--FONT_SIZE) ;
     font-family: var(--FONT_FAMILY);
@@ -76,7 +152,7 @@ body{
   width: calc(100%-40px);   
   margin: 20px 20px;
   height: 25vh;
-  background-color: aliceblue;
+  background-color: transparent;
   padding-left:10px;
   padding-right:10px;
   border-radius:10px ;
@@ -91,30 +167,41 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 3px;
+    padding: 5px;
+    height:30px;
     font-family: monospace,serif;
     font-size: 20px;
+    margin: 5px 0;
+
+}
+.transactions li>label{
+    color:#eae7f6;
 }
 .new-transction{
     width:calc(100vw-40px);
     margin: 20px;
-    height:250px ;
+    height:280px ;
     font-size:var(--FONT_SIZE) ;
     font-family: var(--FONT_FAMILY);
 }
+.new-transction label{
+    color:#eae7f6;
+    padding-left:10px ;
+}
 .new-transction h1{
-    font-size: 25px;
+    font-size: 20px;
     margin: 10px auto;
-    text-align: center;  
-    background-color: #ACC8E5;
-    color: #020422;
+    padding-left: 10px;
+    text-align: start;  
+    background-color: transparent;
+    color:#eae7f6;
     border-radius: 10px;
 }
 .new-transction form{
     height: 230px;
     display: flex;
     flex-direction: column;
-    background-color: #75EC30;
+    background-color: transparent;
     justify-content: space-between;
     color:#021814 ;
     border-radius: 10px;
@@ -125,13 +212,15 @@ body{
   margin: auto 10px;
   padding-left:10px;
   border: none;
+  background-color: rgb(62,52,112);
 }
 .new-transction button{
     border-radius: 10px;
     height:30px;
-    background-color: #F8EB11;
-    color: #671B56;
+    background-color: #fffefd;
+    color: #281d60;
     border: none;
+    margin: 10px;
 }
 .option-btn ul{
     height: 35px;
@@ -141,26 +230,35 @@ body{
     justify-content: space-around;
     align-items: center;
     margin: 10px ;
+    background-color: rgb(62 52 112);
+    padding: 5px;
     border-radius: 10px;
 }
 .option-btn li{
     width: 50%;
     text-align: center;
     color:#E6DEDA;
-    border:2px solid #641212 ;
 }
 .hover-income-btn{
-    background-color:#641212 ;
+    background-color:#38c1fe ;
 }
 .hover-expense-btn{
-    background-color:#641212 ;
+    background-color:#38c1fe ;
 }
 .option-btn ul li:first-child {
-    border-radius: 10px 0 0 10px;
+    border-radius: 5px;
+    margin: 5px;
+    &:hover{
+        color:#2e2e2d;
+    }
 }
 
 .option-btn ul li:last-child {
-    border-radius: 0 10px 10px 0;
+    border-radius: 5px;
+    margin: 5px;
+    &:hover{
+        color:#2e2e2d;
+    }
 }
 .description{
     display: flex;
@@ -170,3 +268,105 @@ body{
     height: 25vh;
 
 }
+ div[class^=body]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color:  rgba(40,29,96,255);;
+}
+ section[class$="page"]{
+     display: flex;
+     flex-direction: column;
+     height:max(fit-content,450px);
+     width:max(350px,30vw);
+     margin: 20px;
+     align-self: center;
+     align-items: center;
+     justify-items: space-between;
+     justify-self: center;
+     background-color: rgba(50,40,103);
+     color:#eff2ef;
+     padding: 20px;
+     border-radius: 20px;
+     font-family: 'Poppins', sans-serif;
+
+ }
+
+ section[class$="page"] > *{
+    padding: 5px;
+ }
+
+ [id^="header"]{
+    font-size: 25px;
+    font-weight: bold;
+ }
+ form[id~="validation"] {
+    width: 100%;
+ }
+ form[id~="validation"] *{
+    padding: 5px 0;
+ }
+
+ form[id~="validation"] input{
+    display: block;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid black;
+    padding-left: 5px;
+    width: 100%;
+    margin:5px 0;
+ }
+ 
+ form[id~="validation"] div[class$="message"] {
+     color:#E4A11B;
+     font-size: smaller;
+ }
+
+
+ form[id~="validation"] button{
+    height:30px;
+    width: 100%;
+    background-color: rgb(13, 110, 253 );
+    outline:none;
+    border: none;
+    border-radius: 10px;
+    color: aliceblue;
+ }
+
+ form[id~="validation"] button:hover{
+    background-color: rgb(255,255,255);
+    color: rgb(0,0,0);
+    border: 1px solid black;
+ }
+
+ div[id^="optional"]{
+    font-size: 12px;
+ }
+
+ @media (min-width:768px){
+    .header .history-btn,.history-header button{
+        display: none;
+    }
+    .transaction-container{
+     position:absolute ;
+     top:0;
+     left:50%;
+     right: 0;
+     bottom: 0;
+    }
+    .history-container{
+    display: block;
+    margin: 0;
+    position: absolute;
+    left:0;
+    top:0;
+    right: 50%;
+    }
+    .header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+ } 

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { addTransction } from '../slices/transctionSlice'
+import { addTransaction } from '../slices/transctionSlice'
+import { useLocation } from 'react-router-dom'
 
 const NewTransaction = () => {
     const [name, setName] = useState('')
@@ -8,6 +9,7 @@ const NewTransaction = () => {
     const [option, setOption] = useState('Income') // Default to 'Income'
     const incomeRef = useRef(null)
     const expenseRef = useRef(null)
+    const location=useLocation()
     const dispatch = useDispatch()
 
     const onNameChange = (e) => setName(e.target.value)
@@ -31,11 +33,12 @@ const NewTransaction = () => {
     const handleClick = (e) => {
       e.preventDefault()
       if(!isNaN(amount)){
-        dispatch(addTransction({
-          Type: option,
-          Name: name,
-          Amount: amount,
-        })) 
+        const data={
+          transactionType: option,
+          transactionName: name,
+          transactionAmount: amount,
+        }
+        dispatch(addTransaction(data,location.state.email)) 
       }else{
         alert("Transaction amount should be number")
       }
