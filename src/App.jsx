@@ -1,8 +1,8 @@
-import {  Router ,Route,Routes} from 'react-router-dom'
+import { Route,Routes} from 'react-router-dom'
 import './App.css'
 import LoginPage from './LoginPage'
 import CreateUser from './CreateUser'
-import ForgetPassword from './forgetPassword'
+import ForgetPassword from "./ForgetPassword"
 import HomePage from './components/HomePage'
 
 

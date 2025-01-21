@@ -4,14 +4,14 @@ import NewTransaction from './NewTransaction'
 import Transactions from './Transactions'
 import { useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { fetchTransactions ,fetchDataByEmail, selectData} from '../slices/transctionSlice'
+import { fetchTransactions , selectData} from '../slices/transctionSlice'
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons';
 import {Pie} from "react-chartjs-2"
 import {Chart as chartJS,Legend,ArcElement,Tooltip} from "chart.js"
 import { useSelector } from 'react-redux';
-import { selectUserDetails } from '../slices/transctionSlice';
+
 
 chartJS.register(ArcElement,Legend,Tooltip)
 
