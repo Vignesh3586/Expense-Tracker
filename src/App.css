@@ -122,7 +122,7 @@ li[id$="expense"]::marker{
 .money-income-expenses{
     display: flex;
     flex-direction: row;
-    width: calc(100%-40px);    
+    width: calc(100% - 40px);    
     height: 50%;
     margin-top: 10px;
 }
@@ -149,7 +149,7 @@ li[id$="expense"]::marker{
 .transactions{
   display: flex;
   flex-direction: column;   
-  width: calc(100%-40px);   
+  width: calc(100% - 40px);   
   margin: 20px 20px;
   height: 25vh;
   background-color: transparent;
@@ -178,7 +178,7 @@ li[id$="expense"]::marker{
     color:#eae7f6;
 }
 .new-transction{
-    width:calc(100vw-40px);
+    width:calc(100vw - 40px);
     margin: 20px;
     height:280px ;
     font-size:var(--FONT_SIZE) ;
@@ -264,7 +264,7 @@ li[id$="expense"]::marker{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(100%-40px);   
+    width: calc(100% - 40px);   
     height: 25vh;
 
 }
