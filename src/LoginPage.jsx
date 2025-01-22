@@ -18,7 +18,7 @@ const LoginPage = () => {
  
 
     const existsEmailAndPassword=async()=>{
-        const url="https://backend-expense-tracker-ur4n.onrender.com"
+        const url=process.env.SERVER_URL
         const options={
             method:"get",
             headers:{

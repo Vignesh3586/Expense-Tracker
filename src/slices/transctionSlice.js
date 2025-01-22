@@ -1,6 +1,6 @@
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
 
-const url="https://backend-expense-tracker-ur4n.onrender.com/transactions"
+const url=process.env.SERVER_URL
 
 export const fetchTransactions=createAsyncThunk('transactions/fetchTransactions',async(email,thunkAPI)=>{
     try{

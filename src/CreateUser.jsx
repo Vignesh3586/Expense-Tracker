@@ -19,7 +19,7 @@ const CreateUser = () => {
 }
 
     const postEmail=async()=>{
-        const url="https://backend-expense-tracker-ur4n.onrender.com/create-user"
+        const url=process.env.SERVER_URL
         const bodyData={
             email:email,
             password:password,

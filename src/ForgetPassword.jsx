@@ -12,7 +12,7 @@ const ForgetPassword = () => {
    const [confirmPasswordMessage,setConfirmPasswordMessage]=('')
 
    const updatePassword=async()=>{
-     const url="https://backend-expense-tracker-ur4n.onrender.com"
+     const url=process.env.SERVER_URL
      const details={
         email:email,
         password:password,

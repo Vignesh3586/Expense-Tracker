@@ -2,7 +2,7 @@ import { Route,Routes} from 'react-router-dom'
 import './App.css'
 import LoginPage from './LoginPage'
 import CreateUser from './CreateUser'
-import ForgetPassword from "./ForgetPassword"
+import ForgetPassword from './forgetPassword'
 import HomePage from './components/HomePage'
 
 
