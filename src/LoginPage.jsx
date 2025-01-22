@@ -20,7 +20,7 @@ const LoginPage = () => {
     const existsEmailAndPassword=async()=>{
         const url="https://backend-expense-tracker-two.vercel.app"
         const options={
-            method:"get",
+            method:"GET",
             headers:{
                "Content-Type":"application/json"
             }

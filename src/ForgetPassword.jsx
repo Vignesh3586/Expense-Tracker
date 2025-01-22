@@ -18,7 +18,7 @@ const ForgetPassword = () => {
         password:password,
      }
      const options={
-        method:"put",
+        method:"PUT",
         body:JSON.stringify(details),
         headers:{
             "Content-Type":"application/json"

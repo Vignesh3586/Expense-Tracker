@@ -5,12 +5,12 @@ const url="https://backend-expense-tracker-two.vercel.app"
 export const fetchTransactions=createAsyncThunk('transactions/fetchTransactions',async(email,thunkAPI)=>{
     try{
         const options={
-            method:"get",
+            method:"GET",
             headers:{
                 "Content-Type":"application/json"
             }
         }
-        const finalURL=`${url}/${email}`
+        const finalURL=`${url}/transactions/${email}`
         const response=await fetch(finalURL,options)
         const result=await response.json()
         return result
@@ -22,16 +22,13 @@ export const fetchTransactions=createAsyncThunk('transactions/fetchTransactions'
 export const addTransaction=createAsyncThunk('transactions/addTransaction',async(email,transactionData,thunkAPI)=>{
     try{
         const options={
-            method:"post",
-            parms:{
-             email:email
-            },
+            method:"POST",
             body:JSON.stringify(transactionData),
             headers:{
                 "Content-Type":"application/json"
             }
         }
-        const response=await fetch(`${url}/transactions`,options)
+        const response=await fetch(`${url}/transactions/${email}`,options)
         const result=await response.json()
         return result
     }catch(error){

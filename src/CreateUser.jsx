@@ -25,7 +25,7 @@ const CreateUser = () => {
             password:password,
         }
         const options={
-            method:"post",
+            method:"POST",
             body:JSON.stringify(bodyData),
             headers:{
                "Content-Type":"application/json"
@@ -40,13 +40,13 @@ const CreateUser = () => {
     }
 
     const validateUser=()=>{
-
+      console.log("hii")
         const isEmail=()=>{
             if(!email){
                 setEmailMessage("Email cannot be empty")
                 return false
             }
-            
+            return true
         }
 
       const isPassword=()=>{
@@ -74,6 +74,7 @@ const CreateUser = () => {
       }
       
     }
+
 
     if(isEmail() && isPassword()){
         postEmail()
