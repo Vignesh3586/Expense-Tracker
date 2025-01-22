@@ -19,7 +19,7 @@ const CreateUser = () => {
 }
 
     const postEmail=async()=>{
-        const url=process.env.SERVER_URL
+        const url="https://backend-expense-tracker-two.vercel.app"
         const bodyData={
             email:email,
             password:password,

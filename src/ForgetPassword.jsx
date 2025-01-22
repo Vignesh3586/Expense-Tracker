@@ -12,7 +12,7 @@ const ForgetPassword = () => {
    const [confirmPasswordMessage,setConfirmPasswordMessage]=('')
 
    const updatePassword=async()=>{
-     const url=process.env.SERVER_URL
+     const url="https://backend-expense-tracker-two.vercel.app"
      const details={
         email:email,
         password:password,

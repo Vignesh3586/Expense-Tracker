@@ -1,6 +1,6 @@
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
 
-const url=process.env.SERVER_URL
+const url="https://backend-expense-tracker-two.vercel.app"
 
 export const fetchTransactions=createAsyncThunk('transactions/fetchTransactions',async(email,thunkAPI)=>{
     try{
