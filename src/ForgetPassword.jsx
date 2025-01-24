@@ -14,8 +14,8 @@ const ForgetPassword = () => {
    const updatePassword=async()=>{
      const url="https://backend-expense-tracker-two.vercel.app"
      const details={
-        email:email,
-        password:password,
+        email,
+        password,
      }
      const options={
         method:"PUT",
@@ -29,10 +29,8 @@ const ForgetPassword = () => {
         if(response.ok){
           return true
         }
-     
      }catch(error){
-        console.error(error.message)
-        return error.message
+       alert(error.message)
      }
    
     
@@ -55,7 +53,7 @@ const ForgetPassword = () => {
                     return false
                 }
               }else{
-                 setPasswordMessage("Must have 6 characters")
+                 setPasswordMessage("Must have 6 length")
               }
             }else{
               setPasswordMessage("Password cannot be empty")
@@ -81,9 +79,16 @@ const styledLinkElement={
   textDecoration:"none",
   color:"#A6EBF1",
 }
+ 
+const onConfirmPasswordChange=(e)=>{
+  setConfirmPassword(e.target.value)
+  setConfirmPasswordMessage("")
+}
 
-
-
+const onPasswordChange=(e)=>{
+  setPassword(e.target.value)
+  setPasswordMessage('')
+}
 
   return (
         <>
@@ -104,7 +109,7 @@ const styledLinkElement={
         required
         placeholder='Enter password'
         value={password}
-        onChange={(e)=>setPassword(e.target.value)}/>
+        onChange={onPasswordChange}/>
         <div className="password-message">{passwordMessage}</div>
         <label htmlFor="input-password">Confirm Password</label>
         <input type="password" 
@@ -113,7 +118,7 @@ const styledLinkElement={
         required
         placeholder='Enter Confirm password'
         value={confirmPassword}
-        onChange={(e)=>setConfirmPassword(e.target.value)}/>
+        onChange={onConfirmPasswordChange}/>
         <div className="confirm-password-message">{confirmPasswordMessage}</div>
         <button type="button" className="login-btn" onClick={validateUser}>Login
         </button>

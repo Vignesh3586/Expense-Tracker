@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import MoneyDeatils from './MoneyDeatils'
 import NewTransaction from './NewTransaction'
 import Transactions from './Transactions'
 import { useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { fetchTransactions , selectData} from '../slices/transctionSlice'
+import { fetchEmailWithData, selectData, selectError} from '../slices/transctionSlice'
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +21,7 @@ const HomePage = () => {
   const email=location.state.email
   const historyRef=useRef(null)
   const userDetails=useSelector(selectData)
-  dispatch(fetchTransactions(email))
+ 
 
   const closeHistory=()=>{
     historyRef.current.classList.add("without-history")
@@ -42,6 +42,7 @@ const HomePage = () => {
     backgroundColor:["#14A44D","#DC4C64"]
    }],
   }
+
   
   const monthData={
     labels:["Income","Expense"],
@@ -51,6 +52,10 @@ const HomePage = () => {
      backgroundColor:["#14A44D","#DC4C64"]
     }],
    }
+
+   useEffect(()=>{
+    dispatch(fetchEmailWithData(email))
+   },[email])
    
 
 

@@ -2,7 +2,7 @@ import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
 
 const url="https://backend-expense-tracker-two.vercel.app"
 
-export const fetchTransactions=createAsyncThunk('transactions/fetchTransactions',async(email,thunkAPI)=>{
+export const fetchEmailWithData=createAsyncThunk('transactions/fetchDataWithEmail',async(email,thunkAPI)=>{
     try{
         const options={
             method:"GET",
@@ -10,34 +10,47 @@ export const fetchTransactions=createAsyncThunk('transactions/fetchTransactions'
                 "Content-Type":"application/json"
             }
         }
-        const finalURL=`${url}/transactions/${email}`
+        const finalURL=`${url}/${email}`
         const response=await fetch(finalURL,options)
         const result=await response.json()
-        return result
+        if(response.ok){
+            return result;
+         }else{
+             throw new Error("Failed to addtransaction")
+         }
     }catch(error){
-        thunkAPI.rejectWithValue(error.message)
+        return thunkAPI.rejectWithValue(error.message)
     }
 })
 
-export const addTransaction=createAsyncThunk('transactions/addTransaction',async(email,transactionData,thunkAPI)=>{
-    try{
-        const options={
-            method:"POST",
-            body:JSON.stringify(transactionData),
-            headers:{
-                "Content-Type":"application/json"
-            }
+
+export const addTransaction = createAsyncThunk(
+    "transactions/addTransaction",
+    async ({ email, transactionData }, thunkAPI) => {
+      try {
+        const options = {
+          method: "POST",
+          body: JSON.stringify(transactionData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const finalURL = `${url}/transactions/${email}`;
+        const response = await fetch(finalURL, options);
+  
+        if (!response.ok) {
+          throw new Error("Failed to add transaction.");
         }
-        const response=await fetch(`${url}/transactions/${email}`,options)
-        const result=await response.json()
-        return result
-    }catch(error){
-        thunkAPI.rejectWithValue(error.message)
+  
+        const result = await response.json();
+        return result; // Ensure the response matches the expected structure
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.message); 
+      }
     }
-})
+  );
 
  const initialState={
-    userdata:null,
     data:null,
     transactions:[],
     loading:false,
@@ -52,29 +65,28 @@ const transactionsSlice=createSlice({
     reducers:{},
     extraReducers:(builder)=>{
         builder
-        .addCase(fetchTransactions.pending,(state)=>{
-            state.loading="true"
+        .addCase(fetchEmailWithData.pending,(state)=>{
+            state.loading=true
         })
-        .addCase(fetchTransactions.fulfilled,(state)=>{
-            state.loading="false"
-            state.transactions=action.payload.transactions;
+        .addCase(fetchEmailWithData.fulfilled,(state,action)=>{
+            state.loading=false
             state.data=action.payload.data;
-            state.userdata=action.payload.userDetails;
+            state.transactions=action.payload.transactions;
         })
-        .addCase(fetchTransactions.rejected,(state)=>{
-            state.loading="false"
-            state.error=action.error.message;
+        .addCase(fetchEmailWithData.rejected,(state,action)=>{
+            state.loading=false
+            state.error=action.payload || "Failed to fetch data";
         })
         .addCase(addTransaction.pending,(state)=>{
-            state.loading="true"
+            state.loading=true
         })
-        .addCase(addTransaction.fulfilled,(state)=>{
-            state.loading="false"
-            state.transactions={...state.transactions,...action.payload};
+        .addCase(addTransaction.fulfilled,(state,action)=>{
+            state.loading=false
+            state.transactions=Array.isArray(action.payload)?[...state.transactions,...action.payload]:[...state.transactions,action.payload];
         })
-        .addCase(addTransaction.rejected,(state)=>{
-            state.loading="false"
-            state.error=action.error.message;
+        .addCase(addTransaction.rejected,(state,action)=>{
+            state.loading=true
+            state.error=action.payload ||"Failed to add transaction";
         })
 
     }
@@ -83,5 +95,6 @@ const transactionsSlice=createSlice({
 
 export default  transactionsSlice.reducer
 export const selectAllTransactions=(state)=> state.transactions.transactions
-export const selectUserDetails=(state)=>state.transactions.userdata
 export const selectData=(state)=>state.transactions.data
+export const selectError=(state)=>state.transactions.error
+export const selectLoading=(state)=>state.transactions.loading

@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const LoginPage = () => {
     const navigate=useNavigate()
-
+ 
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState("")
     const [emailMessage,setEmailMessage]=useState("")
@@ -28,36 +28,45 @@ const LoginPage = () => {
         const finalURL=`${url}?email=${email}&password=${password}`
         try{
             const response=await fetch(finalURL,options) 
-            const result=await response.json()
-            return result
+            if(response.ok){
+               return true
+            }else{
+                throw new Error("Invalid email and password")
+            }
         }catch(error){
             return error.message
         }
     
     }
 
-    const isEmail=()=>{
-        if(!email.innerText){
-           setEmailMessage("Email cannot be empty")
-            return false
-        }
-        const checkEmail=existsEmail()
-        if(checkEmail){
-            return true
-        }else{
-              setEmailMessage(checkEmail)
-              return false
-        }
+    function isValid() {
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(email);
     }
+    
+    const isEmail=()=>{
+        const valid=isValid()
+        if(!email){
+           setEmailMessage("Email cannot be empty")
+           return false;
+        }
+        if(valid){
+           return true
+        }else{
+            setEmailMessage("Invalid email")
+            return false;
+        }
+         
+        }
 
-    const validateUser=()=>{  
+    const validateUser=async()=>{  
       const isPassword=()=>{
       if(password){
-        const checkPassword=existsEmailAndPassword()
-        if(checkPassword.ok){
+        if(password.length>=6){
             return true
         }else{
-            alert(checkPassword.message)
+            setPasswordMessage("Password must have 6 length")
+            return false
         } 
       }else{
         setPasswordMessage("Password cannot be empty")
@@ -67,7 +76,11 @@ const LoginPage = () => {
     }
     
     if(isEmail() && isPassword()){
-        navigate("/home-page",{state:{email}})
+        const result=await existsEmailAndPassword()
+        if(result){
+            navigate("/home-page",{state:{email}})
+        }
+     
     }
 
     }
@@ -76,6 +89,18 @@ const LoginPage = () => {
         if(isEmail()){
             navigate("/forget-password",{state:{email}})
         }  
+    }
+   
+    const onEmailChange=(e)=>{
+        e.preventDefault()
+        setEmail(e.target.value)
+        setEmailMessage('')
+    }
+    
+    const onPasswordChange=(e)=>{
+        e.preventDefault()
+        setPassword(e.target.value)
+        setPasswordMessage('')
     }
 
   return (
@@ -91,7 +116,7 @@ const LoginPage = () => {
         required
         placeholder='Enter your email'
         value={email}
-        onChange={(e)=>setEmail(e.target.value)}/>
+        onChange={onEmailChange}/>
         <div className='email-message'>{emailMessage}</div>
         <label htmlFor="input-password">Password</label>
         <input type="password" 
@@ -100,12 +125,12 @@ const LoginPage = () => {
         required
         placeholder='Enter password'
         value={password}
-        onChange={(e)=>setPassword(e.target.value)}/>
-                <a style={{
+        onChange={onPasswordChange}/>
+                <Link style={{
                      textDecoration:"none",
                      fontSize:"12px",
                      color:"#A6EBF1",
-                }} to="/forget-password" onClick={navigateToForgetPassword}>forget password</a>
+                }} to="/forget-password" onClick={navigateToForgetPassword}>forget password</Link>
         <div className="password-message">{passwordMessage}</div>
         <button type="button" className="login-btn" onClick={validateUser}>Login
         </button>

@@ -5,6 +5,7 @@ import { useState } from 'react'
 const CreateUser = () => {
     const navigate=useNavigate()
     
+   const [response,setResponse]=useState(false)
    const [email,setEmail]=useState('')
    const [password,setPassword]=useState("")
    const [confirmPassword,setConfirmPassword]=useState("")
@@ -21,8 +22,8 @@ const CreateUser = () => {
     const postEmail=async()=>{
         const url="https://backend-expense-tracker-two.vercel.app"
         const bodyData={
-            email:email,
-            password:password,
+            email,
+            password,
         }
         const options={
             method:"POST",
@@ -32,7 +33,11 @@ const CreateUser = () => {
             }
         }
         try{
-            await fetch(url,options) 
+            const finalURL=`${url}/create-user`
+            const response=await fetch(finalURL,options) 
+            if(response.ok){
+              setResponse(true)
+           }
         }catch(error){
             console.error(`Error:${error.message}`)
         }
@@ -40,21 +45,28 @@ const CreateUser = () => {
     }
 
     const validateUser=()=>{
-      console.log("hii")
-        const isEmail=()=>{
-            if(!email){
-                setEmailMessage("Email cannot be empty")
-                return false
-            }
-            return true
+      function isValid() {
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(email);
+    }
+    
+    const isEmail=()=>{
+        const valid=isValid()
+        if(!email){
+           setEmailMessage("Email cannot be empty")
+          return false
+        }
+        if(valid){
+          return true
+        }   
         }
 
+
       const isPassword=()=>{
-      const comparePassword=(password==confirmPassword)
       if(password){
         if(password.length>=6){
         if(confirmPassword){
-            if(comparePassword){
+            if(password==confirmPassword){
              return true
             }else{
             setPasswordMessage("Password does not match")
@@ -78,9 +90,25 @@ const CreateUser = () => {
 
     if(isEmail() && isPassword()){
         postEmail()
-        navigate("/home-page",{state:{email}})
+        if(response){
+          navigate("/home-page",{state:{email}})
+        }   
     }
 
+    }
+    const onConfirmPasswordChange=(e)=>{
+      setConfirmPassword(e.target.value)
+      setConfirmPasswordMessage("")
+    }
+    
+    const onPasswordChange=(e)=>{
+      setPassword(e.target.value)
+      setPasswordMessage('')
+    }
+
+    const onEmailChange=(e)=>{
+      setEmail(e.target.value)
+      setEmailMessage('')
     }
   return (
     <>
@@ -95,7 +123,7 @@ const CreateUser = () => {
         required
         placeholder='Enter your email'
         value={email}
-        onChange={(e)=>setEmail(e.target.value)}/>
+        onChange={onEmailChange}/>
         <div className='email-message'>{emailMessage}</div>
         <label htmlFor="input-password">Password</label>
         <input type="password" 
@@ -104,7 +132,7 @@ const CreateUser = () => {
         required
         placeholder='Enter password'
         value={password}
-        onChange={(e)=>setPassword(e.target.value)}/> 
+        onChange={onPasswordChange}/> 
         <div className="password-message">{passwordMessage}</div>
         <label htmlFor="input-password">Confirm Password</label>
         <input type="password" 
@@ -113,7 +141,7 @@ const CreateUser = () => {
         required
         placeholder='Enter Confirm password'
         value={confirmPassword}
-        onChange={(e)=>setConfirmPassword(e.target.value)}/>
+        onChange={onConfirmPasswordChange}/>
         <div className="confirm-password-message">{confirmPasswordMessage}</div>
         <button type="button" className="login-btn" onClick={validateUser}>
           Create Account

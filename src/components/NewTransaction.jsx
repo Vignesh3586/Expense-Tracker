@@ -11,7 +11,7 @@ const NewTransaction = () => {
     const expenseRef = useRef(null)
     const location=useLocation()
     const dispatch = useDispatch()
-
+    
     const onNameChange = (e) => setName(e.target.value)
     const onAmountChange = (e) => setAmount(e.target.value)
     
@@ -38,7 +38,7 @@ const NewTransaction = () => {
           transactionName: name,
           transactionAmount: amount,
         }
-        dispatch(addTransaction(data,location.state.email)) 
+        dispatch(addTransaction({email:location.state.email,transactionData:data})) 
       }else{
         alert("Transaction amount should be number")
       }

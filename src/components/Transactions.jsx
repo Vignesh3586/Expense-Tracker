@@ -15,9 +15,9 @@ const Transactions = () => {
 
     const getStyleOfSpan=(type)=>{
       if(type=="Income"){
-        return {color:"#21596d"}
+        return {color:"#23e465"}
       }else{
-        return {color:"rgba(127,86,95,255)"}
+        return {color:" #ec1d1d"}
       }
     }
     return (
@@ -26,9 +26,9 @@ const Transactions = () => {
         {(transactions) && transactions.length>0 ?
           <ul>
           {transactions.map((transaction)=>(
-             <li key={transaction.Id}>
+             <li key={transaction._id}>
               <label htmlFor="transaction">{transaction.transactionName}</label>
-              <span id='transction' style={()=>getStyleOfSpan(transaction.transactionType)}>{`${sign(transaction.transactionType)}${transaction.transactionAmount}`}</span>
+              <span id='transction' style={getStyleOfSpan(transaction.transactionType)}>{`${sign(transaction.transactionType)}${transaction.transactionAmount}`}</span>
              </li>
           ))
           }
