@@ -11,7 +11,7 @@ const CreateUser = () => {
    const [confirmPassword,setConfirmPassword]=useState("")
    const [emailMessage,setEmailMessage]=useState("")
    const [passwordMessage,setPasswordMessage]=useState("")
-   const [confirmPasswordMessage,setConfirmPasswordMessage]=('')
+   const [confirmPasswordMessage,setConfirmPasswordMessage]=useState('')
     
 
    const styledLinkElement={
