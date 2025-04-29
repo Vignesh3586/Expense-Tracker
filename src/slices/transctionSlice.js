@@ -1,6 +1,6 @@
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
 
-const url="https://backend-expense-tracker-two.vercel.app"
+const url="https://backend-expense-tracker-1-862g.onrender.com"
 
 export const fetchEmailWithData=createAsyncThunk('transactions/fetchDataWithEmail',async(email,thunkAPI)=>{
     try{

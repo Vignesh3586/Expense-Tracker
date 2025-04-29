@@ -20,7 +20,7 @@ const CreateUser = () => {
 }
 
     const postEmail=async()=>{
-        const url="https://backend-expense-tracker-two.vercel.app"
+        const url="https://backend-expense-tracker-1-862g.onrender.com"
         const bodyData={
             email,
             password,
@@ -112,7 +112,7 @@ const CreateUser = () => {
     }
   return (
     <>
-    <div className="body-create">
+    <div className="body-create">   
     <section className="create-user-page">
      <div id="header-create">Create Account</div>
      <form id="email validation">

@@ -18,7 +18,7 @@ const LoginPage = () => {
  
 
     const existsEmailAndPassword=async()=>{
-        const url="https://backend-expense-tracker-two.vercel.app"
+        const url="https://backend-expense-tracker-1-862g.onrender.com"
         const options={
             method:"GET",
             headers:{
