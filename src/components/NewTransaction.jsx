@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { addTransaction } from '../slices/transctionSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addTransaction, selectLoading } from '../slices/transctionSlice'
 import { useLocation } from 'react-router-dom'
 
 const NewTransaction = () => {
@@ -11,9 +11,12 @@ const NewTransaction = () => {
     const expenseRef = useRef(null)
     const location=useLocation()
     const dispatch = useDispatch()
+    const loading=useSelector(selectLoading)
     
     const onNameChange = (e) => setName(e.target.value)
     const onAmountChange = (e) => setAmount(e.target.value)
+
+
     
     const onOptionChange = (option) => {
       setOption(option)
@@ -41,8 +44,7 @@ const NewTransaction = () => {
         dispatch(addTransaction({email:location.state.email,transactionData:data})) 
       }else{
         alert("Transaction amount should be number")
-      }
-      
+      } 
       setName('')
       setAmount('')
     }
@@ -62,7 +64,7 @@ const NewTransaction = () => {
             <input required type="text" id='input-name' value={name} onChange={onNameChange} />
             <label htmlFor="input-amount">Transaction Amount</label>
             <input required type="text" id='input-amount' value={amount} onChange={onAmountChange} />
-            <button type='submit' className='submit-btn'>Add Transaction</button>
+            <button type='submit' className='submit-btn' >{loading ? "Adding" : "Add Transaction"}</button>
           </form>
         </section>
       </>

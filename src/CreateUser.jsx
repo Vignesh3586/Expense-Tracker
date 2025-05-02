@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate ,Link} from 'react-router-dom'
 import { useState } from 'react'
+import { selectLoading } from './slices/transctionSlice'
+import { useSelector } from 'react-redux'
 
 const CreateUser = () => {
     const navigate=useNavigate()
@@ -12,6 +14,7 @@ const CreateUser = () => {
    const [emailMessage,setEmailMessage]=useState("")
    const [passwordMessage,setPasswordMessage]=useState("")
    const [confirmPasswordMessage,setConfirmPasswordMessage]=useState('')
+   const [loading,setLoading]=useState(false)
     
 
    const styledLinkElement={
@@ -40,11 +43,14 @@ const CreateUser = () => {
            }
         }catch(error){
             console.error(`Error:${error.message}`)
+        }finally{
+          setLoading(false)
         }
     
     }
 
     const validateUser=()=>{
+      setLoading(true)
       function isValid() {
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return pattern.test(email);
@@ -144,7 +150,7 @@ const CreateUser = () => {
         onChange={onConfirmPasswordChange}/>
         <div className="confirm-password-message">{confirmPasswordMessage}</div>
         <button type="button" className="login-btn" onClick={validateUser}>
-          Create Account
+        {loading ? "Loading..." : "Create User"}
         </button>
         </form>
         <div id="optional-create">

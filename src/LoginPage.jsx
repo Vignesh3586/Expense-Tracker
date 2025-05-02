@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate,Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { selectLoading } from './slices/transctionSlice'
 
 const LoginPage = () => {
     const navigate=useNavigate()
@@ -9,6 +11,7 @@ const LoginPage = () => {
     const [password,setPassword]=useState("")
     const [emailMessage,setEmailMessage]=useState("")
     const [passwordMessage,setPasswordMessage]=useState("")
+    const [loading,setLoading]=useState(false)
 
     const styledLinkElement={
         textDecoration:"none",
@@ -35,6 +38,8 @@ const LoginPage = () => {
             }
         }catch(error){
             return error.message
+        }finally{
+            setLoading(false)
         }
     
     }
@@ -59,7 +64,8 @@ const LoginPage = () => {
          
         }
 
-    const validateUser=async()=>{  
+    const validateUser=async()=>{ 
+      setLoading(true) 
       const isPassword=()=>{
       if(password){
         if(password.length>=6){
@@ -132,7 +138,7 @@ const LoginPage = () => {
                      color:"#A6EBF1",
                 }} to="/forget-password" onClick={navigateToForgetPassword}>forget password</Link>
         <div className="password-message">{passwordMessage}</div>
-        <button type="button" className="login-btn" onClick={validateUser}>Login
+        <button type="button" className="login-btn" onClick={validateUser}>{loading ? "Loading..." : "Login"}
         </button>
         </form>
 

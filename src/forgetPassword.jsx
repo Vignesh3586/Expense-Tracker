@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { selectLoading } from './slices/transctionSlice'
+import { useSelector } from 'react-redux'
 
 const ForgetPassword = () => {
    const location=useLocation()
@@ -10,6 +12,7 @@ const ForgetPassword = () => {
    const [confirmPassword,setConfirmPassword]=useState("")
    const [passwordMessage,setPasswordMessage]=useState("")
    const [confirmPasswordMessage,setConfirmPasswordMessage]=('')
+   const [loading,setLoading]=useState(false)
 
    const updatePassword=async()=>{
      const url="https://backend-expense-tracker-1-862g.onrender.com"
@@ -31,12 +34,15 @@ const ForgetPassword = () => {
         }
      }catch(error){
        alert(error.message)
+     }finally{
+      setLoading(false)
      }
    
     
    }
 
    const validateUser=()=>{
+       setLoading(true)
         const isPassword=()=>{
             const comparePassword=(password==confirmPassword)
             if(password){
@@ -120,7 +126,7 @@ const onPasswordChange=(e)=>{
         value={confirmPassword}
         onChange={onConfirmPasswordChange}/>
         <div className="confirm-password-message">{confirmPasswordMessage}</div>
-        <button type="button" className="login-btn" onClick={validateUser}>Login
+        <button type="button" className="login-btn" onClick={validateUser}>{loading ? "Loading..." : "Login"}
         </button>
         </form>
         <div id='optional-forget'>
