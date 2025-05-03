@@ -21,7 +21,7 @@ const CreateUser = () => {
 
     const postEmail = async () => {
         setLoading(true);
-        const url = "http://localhost:3000";
+        const url = "https://backend-expense-tracker-1-862g.onrender.com";
         const bodyData = {
             email,
             password,
