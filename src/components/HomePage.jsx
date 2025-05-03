@@ -61,7 +61,6 @@ const HomePage = () => {
 
   return (
      <>
-    
     <div className="container">
     <section className="history-container without-history" ref={historyRef}>
       <div className="history-header" >
@@ -91,7 +90,7 @@ const HomePage = () => {
     <NewTransaction/> 
     </section>
     </div>  
-     </>
+      </>
   )
 }
 

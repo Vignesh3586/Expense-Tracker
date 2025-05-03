@@ -12,7 +12,7 @@ const Transactions = () => {
         return '-'
       }
     }
-
+    
     const getStyleOfSpan=(type)=>{
       if(type=="Income"){
         return {color:"#23e465"}

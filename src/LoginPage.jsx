@@ -1,154 +1,154 @@
 import React from 'react'
-import { useNavigate,Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectLoading } from './slices/transctionSlice'
 
 const LoginPage = () => {
-    const navigate=useNavigate()
- 
-    const [email,setEmail]=useState('')
-    const [password,setPassword]=useState("")
-    const [emailMessage,setEmailMessage]=useState("")
-    const [passwordMessage,setPasswordMessage]=useState("")
-    const [loading,setLoading]=useState(false)
+    const navigate = useNavigate()
 
-    const styledLinkElement={
-        textDecoration:"none",
-        color:"#A6EBF1",
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState("")
+    const [emailMessage, setEmailMessage] = useState("")
+    const [passwordMessage, setPasswordMessage] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    const styledLinkElement = {
+        textDecoration: "none",
+        color: "#A6EBF1",
     }
-    
- 
 
-    const existsEmailAndPassword=async()=>{
-        const url="https://backend-expense-tracker-1-862g.onrender.com"
-        const options={
-            method:"GET",
-            headers:{
-               "Content-Type":"application/json"
+
+
+    const existsEmailAndPassword = async () => {
+        const url = "https://backend-expense-tracker-1-862g.onrender.com"
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
             }
         }
-        const finalURL=`${url}?email=${email}&password=${password}`
-        try{
-            const response=await fetch(finalURL,options) 
-            if(response.ok){
-               return true
-            }else{
+        const finalURL = `${url}?email=${email}&password=${password}`
+        try {
+            const response = await fetch(finalURL, options)
+            if (response.ok) {
+                return true
+            } else {
                 throw new Error("Invalid email and password")
             }
-        }catch(error){
+        } catch (error) {
             return error.message
-        }finally{
+        } finally {
             setLoading(false)
         }
-    
+
     }
 
     function isValid() {
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return pattern.test(email);
     }
-    
-    const isEmail=()=>{
-        const valid=isValid()
-        if(!email){
-           setEmailMessage("Email cannot be empty")
-           return false;
+
+    const isEmail = () => {
+        const valid = isValid()
+        if (!email) {
+            setEmailMessage("Email cannot be empty")
+            return false;
         }
-        if(valid){
-           return true
-        }else{
+        if (valid) {
+            return true
+        } else {
             setEmailMessage("Invalid email")
             return false;
         }
-         
+
+    }
+
+    const validateUser = async () => {
+        setLoading(true)
+        const isPassword = () => {
+            if (password) {
+                if (password.length >= 6) {
+                    return true
+                } else {
+                    setPasswordMessage("Password must have 6 length")
+                    return false
+                }
+            } else {
+                setPasswordMessage("Password cannot be empty")
+                return false
+            }
+
         }
 
-    const validateUser=async()=>{ 
-      setLoading(true) 
-      const isPassword=()=>{
-      if(password){
-        if(password.length>=6){
-            return true
-        }else{
-            setPasswordMessage("Password must have 6 length")
-            return false
-        } 
-      }else{
-        setPasswordMessage("Password cannot be empty")
-        return false
-      }
-      
-    }
-    
-    if(isEmail() && isPassword()){
-        const result=await existsEmailAndPassword()
-        if(result){
-            navigate("/home-page",{state:{email}})
+        if (isEmail() && isPassword()) {
+            const result = await existsEmailAndPassword()
+            if (result) {
+                navigate("/home-page", { state: { email } })
+            }
+
         }
-     
-    }
 
     }
 
-    const navigateToForgetPassword=()=>{
-        if(isEmail()){
-            navigate("/forget-password",{state:{email}})
-        }  
+    const navigateToForgetPassword = () => {
+        if (isEmail()) {
+            navigate("/forget-password", { state: { email } })
+        }
     }
-   
-    const onEmailChange=(e)=>{
+
+    const onEmailChange = (e) => {
         e.preventDefault()
         setEmail(e.target.value)
         setEmailMessage('')
     }
-    
-    const onPasswordChange=(e)=>{
+
+    const onPasswordChange = (e) => {
         e.preventDefault()
         setPassword(e.target.value)
         setPasswordMessage('')
     }
 
-  return (
-    <>
-    <div className='body-login'>
-     <section className="login-page">
-        <header id="header-login">Login</header>
-        <form id="email validation">
-        <label htmlFor="input-email">Email</label>
-        <input type="email" 
-        name="email" 
-        id="input-email"
-        required
-        placeholder='Enter your email'
-        value={email}
-        onChange={onEmailChange}/>
-        <div className='email-message'>{emailMessage}</div>
-        <label htmlFor="input-password">Password</label>
-        <input type="password" 
-        name="password" 
-        id="input-password"
-        required
-        placeholder='Enter password'
-        value={password}
-        onChange={onPasswordChange}/>
-                <Link style={{
-                     textDecoration:"none",
-                     fontSize:"12px",
-                     color:"#A6EBF1",
-                }} to="/forget-password" onClick={navigateToForgetPassword}>forget password</Link>
-        <div className="password-message">{passwordMessage}</div>
-        <button type="button" className="login-btn" onClick={validateUser}>{loading ? "Loading..." : "Login"}
-        </button>
-        </form>
+    return (
+        <>
+            <div className='body-login'>
+                <section className="login-page">
+                    <header id="header-login">Login</header>
+                    <form id="email validation">
+                        <label htmlFor="input-email">Email</label>
+                        <input type="email"
+                            name="email"
+                            id="input-email"
+                            required
+                            placeholder='Enter your email'
+                            value={email}
+                            onChange={onEmailChange} />
+                        <div className='email-message'>{emailMessage}</div>
+                        <label htmlFor="input-password">Password</label>
+                        <input type="password"
+                            name="password"
+                            id="input-password"
+                            required
+                            placeholder='Enter password'
+                            value={password}
+                            onChange={onPasswordChange} />
+                        <Link style={{
+                            textDecoration: "none",
+                            fontSize: "12px",
+                            color: "#A6EBF1",
+                        }} to="/forget-password" onClick={navigateToForgetPassword}>forget password</Link>
+                        <div className="password-message">{passwordMessage}</div>
+                        <button type="button" className="login-btn" onClick={validateUser}>{loading ? "Loading..." : "Login"}
+                        </button>
+                    </form>
 
-        <div id="optional-login">
-            I have no account?<Link style={styledLinkElement} to="/create-user">create account</Link>
-        </div>
-      </section>
-      </div>
-    </>
-  )
+                    <div id="optional-login">
+                        I have no account?<Link style={styledLinkElement} to="/create-user">create account</Link>
+                    </div>
+                </section>
+            </div>
+        </>
+    )
 }
 
 export default LoginPage
