@@ -1,21 +1,24 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectData} from '../slices/transctionSlice'
 
 const MoneyDeatils = () => {
+
   const userDetails=useSelector(selectData);
+
+  console.log(userDetails?.balance)
+
   return (
     <section className="money-details">
         <div className="money-balance">
             <label htmlFor="balance">Balance</label>
-            <div id='balance' style={{fontFamily:"initial"}}>{"\u20B9"}{userDetails?.balance||0}</div>
+            <div id='balance' style={{fontFamily:"initial"}}>{"\u20B9"}{userDetails?.balance || 0}</div>
         </div>
         <div className="money-income-expenses">
         <div className="money-income">
             <label htmlFor="income">Income</label>
             <div id='income' style={{fontFamily:"initial",
               color:"#23e465"
-            }}>{"\u20B9"}{userDetails?.income||0}</div>
+            }}>{"\u20B9"}{userDetails?.income || 0}</div>
         </div>
         <div className="money-expenses">
             <label htmlFor="expenses">Expense</label>

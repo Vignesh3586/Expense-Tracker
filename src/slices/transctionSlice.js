@@ -43,7 +43,7 @@ export const addTransaction = createAsyncThunk(
         }
   
         const result = await response.json();
-        return result; // Ensure the response matches the expected structure
+        return result; 
       } catch (error) {
         return thunkAPI.rejectWithValue(error.message); 
       }
@@ -51,7 +51,7 @@ export const addTransaction = createAsyncThunk(
   );
 
  const initialState={
-    data:null,
+    data:{},
     transactions:[],
     loading:false,
     error:null
@@ -82,7 +82,9 @@ const transactionsSlice=createSlice({
         })
         .addCase(addTransaction.fulfilled,(state,action)=>{
             state.loading=false
-            state.transactions=Array.isArray(action.payload)?[...state.transactions,...action.payload]:[...state.transactions,action.payload];
+            state.transactions=(action.payload.transactions).length > 0 ?action.payload.transactions:[];
+            state.data=action.payload.data
+            console.log(action.payload.data)
         })
         .addCase(addTransaction.rejected,(state,action)=>{
             state.loading=true

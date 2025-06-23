@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTransaction, selectLoading } from '../slices/transctionSlice'
+import { addTransaction, selectLoading,fetchEmailWithData } from '../slices/transctionSlice'
 import { useLocation } from 'react-router-dom'
 
 const NewTransaction = () => {
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
-    const [option, setOption] = useState('Income') // Default to 'Income'
+    const [option, setOption] = useState('Income') 
     const incomeRef = useRef(null)
     const expenseRef = useRef(null)
     const location=useLocation()
@@ -33,7 +33,7 @@ const NewTransaction = () => {
       onOptionChange("Income")
     }, [])
 
-    const handleClick = (e) => {
+    const handleClick = async(e) => {
       e.preventDefault()
       if(!isNaN(amount)){
         const data={
@@ -42,6 +42,7 @@ const NewTransaction = () => {
           transactionAmount: amount,
         }
         dispatch(addTransaction({email:location.state.email,transactionData:data})) 
+     
       }else{
         alert("Transaction amount should be number")
       } 

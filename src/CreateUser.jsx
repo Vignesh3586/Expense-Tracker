@@ -39,18 +39,17 @@ const CreateUser = () => {
             const data = await response.json();
             if (response.ok && response.status === 201) {
                 setRegistrationSuccessful(true);
-                return true; // Indicate success
+                return true; 
             }else if(response.status==400){
                   alert(data.message)
             }else {
                 const errorData = await response.json();
                 console.error("Registration failed:", errorData);
-                // Handle error messages from the backend if needed
-                return false; // Indicate failure
+                return false;
             }
         } catch (error) {
             console.error(`Error:${error.message}`);
-            return false; // Indicate failure
+            return false; 
         } finally {
             setLoading(false);
         }
@@ -105,7 +104,7 @@ const CreateUser = () => {
                 navigate("/home-page", { state: { email } });
             }
         } else {
-            setLoading(false); // Stop loading if validation fails
+            setLoading(false); 
         }
     };
 
